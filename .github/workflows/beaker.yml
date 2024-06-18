@@ -61,7 +61,7 @@ on:
         type: string
       acceptance_runs_on:
         description: the runner group used for acceptance jobs run on
-        default: ubuntu-20.04
+        default: ubuntu-24.04
         required: false
         type: string
     secrets:
