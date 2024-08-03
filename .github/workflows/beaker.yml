@@ -56,12 +56,12 @@ on:
         type: string
       unit_runs_on:
         description: the runner group used for unit jobs run on
-        default: ubuntu-latest
+        default: ubuntu-24.04
         required: false
         type: string
       acceptance_runs_on:
         description: the runner group used for acceptance jobs run on
-        default: ubuntu-20.04
+        default: ubuntu-24.04
         required: false
         type: string
     secrets:
@@ -78,7 +78,7 @@ jobs:
       run:
         working-directory: ${{ inputs.working-directory }}
     name: Static validations
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: ${{ inputs.timeout_minutes }}
     outputs:
       puppet_unit_test_matrix: ${{ steps.get-outputs.outputs.puppet_unit_test_matrix }}
@@ -183,7 +183,7 @@ jobs:
     needs:
       - unit
       - acceptance
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: Test suite
     steps:
       - run: echo Test suite completed
