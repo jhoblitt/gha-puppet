@@ -39,6 +39,11 @@ on:
         default: docker
         required: false
         type: string
+      install_vagrant_dependencies:
+        description: When true and beaker_hypervisor==vagrant_libvirt, we will install vagrant + libvirt
+        default: true
+        required: false
+        type: boolean
       beaker_facter:
         description: Expand the Beaker matrix based on a fact
         default: 'false'
@@ -163,7 +168,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ${{ inputs.additional_packages }}
       - name: Setup libvirt for Vagrant
-        if: ${{ inputs.beaker_hypervisor == 'vagrant_libvirt' }}
+        if: ${{ inputs.beaker_hypervisor == 'vagrant_libvirt' && inputs.install_vagrant_dependencies == true }}
         run: |
           sudo add-apt-repository ppa:evgeni/vagrant
           sudo apt-get update
@@ -176,6 +181,7 @@ jobs:
           bundler-cache: true
           cache-version: ${{ inputs.cache-version }}
           working-directory: ${{ inputs.working-directory }}
+          self-hosted: ${{ inputs.acceptance_runs_on != 'ubuntu-24.04' }}
       - name: Run tests
         run: bundle exec rake beaker
         env: ${{ matrix.env }}
