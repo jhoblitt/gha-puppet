@@ -181,7 +181,7 @@ jobs:
           bundler-cache: true
           cache-version: ${{ inputs.cache-version }}
           working-directory: ${{ inputs.working-directory }}
-          self-hosted: ${{ inputs.acceptance_runs_on != 'ubuntu-24.04' }}
+          self-hosted: ${{ ! startsWith(inputs.acceptance_runs_on, 'ubuntu-') }}
       - name: Run tests
         run: bundle exec rake beaker
         env: ${{ matrix.env }}
